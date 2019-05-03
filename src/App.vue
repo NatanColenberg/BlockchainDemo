@@ -8,20 +8,24 @@
     </h1>
     
     <div class="app" v-on:wheel="ScrollFromVarticalToHorizontal">
+      
       <template v-for="(b, index) in blocks">
         <Block
           class="block"
           v-bind:key="index"
           v-bind:number="index"
           v-bind:block="b"
-          v-on:checkChain="CheckChain"
-        />
+          v-on:checkChain="CheckChain"/>
+
         <i class="arrow fa fa-arrow-right" v-bind:key="'arrow_'+index" style="font-size:3rem"></i>
       </template>
 
-      <div class="addNew" v-on:click="AddNewBlock()">
-        <div style="margin:2rem">Add New Block</div>
-        <div><i class="fa fa-plus-square-o" style="font-size:5rem"></i></div>
+      <div>
+        <div class="addNew" v-on:click="AddNewBlock()">
+          <div style="margin:2rem">Add New Block</div>
+          <div><i class="fa fa-plus-square-o" style="font-size:5rem"></i></div>
+        </div>
+        <div class="spacer"></div>
       </div>
     </div>
   </div>
@@ -82,16 +86,28 @@ export default {
     };
   },
   methods: {
+
     AddNewBlock() {
-      this.blocks.push({
+
+      // Create the new Block
+      const newBlock = {
         number: this.blocks.length,
         nonce: 0,
         data: "",
         prev: this.blocks[this.blocks.length - 1].hash,
         hash: "",
         isValid: true
-      });
-      window.scrollBy(0,500);
+      }
+
+      // Add the new block to the list
+      this.blocks.push(newBlock);
+      
+      // Scroll all the way to the right
+      setTimeout(() => {
+        const conent = document.querySelector('.app');
+        conent.scrollLeft += 500;
+      }, 0);
+
     },
     AddBlock(block) {
       this.blocks.push(block);
@@ -134,7 +150,6 @@ export default {
   display: flex;
   align-items: center;
   overflow-x: auto;
-  
   padding: 20px;
 }
 .arrow{
@@ -155,7 +170,7 @@ export default {
   cursor: pointer;
   border: 4px dashed rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  margin-right: 20px;
+  margin: 2rem;
 }
 /* width */
 ::-webkit-scrollbar {

@@ -1,7 +1,7 @@
 # blockchain
 
 ## Running Demo
-www.natanc.com
+Click here to see a working demo of this project: www.natanc.com
 
 ## Project setup
 ```
